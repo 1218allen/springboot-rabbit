@@ -6,6 +6,8 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public class Sender {
     @Autowired
@@ -15,9 +17,9 @@ public class Sender {
     @Autowired
     private FanoutExchange exchange;
 
-    public void send(String msgId) {
+    public void send(Map<String, Object> params) {
         System.out.println("exchange:" + exchange.getName());
         System.out.println("queue:" + queue.getName());
-        this.rabbitTemplate.convertAndSend(exchange.getName(), queue.getName(), msgId);
+        this.rabbitTemplate.convertAndSend(exchange.getName(), queue.getName(), params);
     }
 }
